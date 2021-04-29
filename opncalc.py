@@ -29,8 +29,8 @@ def calculate(tokens, stack, storage):
             result = a + b
             stack.append(result)
         elif t == "-":
-            a = stack.pop()
             b = stack.pop()
+            a = stack.pop()
             result = a - b
             stack.append(result)
         elif t == "*":
