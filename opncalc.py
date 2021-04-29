@@ -43,6 +43,11 @@ def calculate(tokens, stack, storage):
             a = stack.pop()
             result = a / b
             stack.append(result)
+        elif t == "**":
+            b = stack.pop()
+            a = stack.pop()
+            result = a ** b
+            stack.append(result)
         elif t == "quit":
             done = True
         elif t == "store": # "23 4 store ... 4 recall"
