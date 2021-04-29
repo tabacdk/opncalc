@@ -9,8 +9,8 @@ def separate(text):
     Returns:
         list[str]: The tokens
 
-    >>> separate("123 456 +")
-    ['123', '456', '+']
+    >>> separate("123.0 456.0 +")
+    ['123.0', '456.0', '+']
     >>> separate("")
     []
     """
@@ -20,7 +20,7 @@ def separate(text):
 def calculate(tokens, stack, storage):
     done = False
     for t in tokens:
-        n = safe_int(t)
+        n = safe_float(t)
         if n is not None:
             stack.append(n)
         elif t == "+":
@@ -48,10 +48,10 @@ def calculate(tokens, stack, storage):
         elif t == "store": # "23 4 store ... 4 recall"
             b = stack.pop()
             a = stack.pop()
-            storage[b] = a
+            storage[int(b)] = a
         elif t == "recall":
             a = stack.pop()
-            b = storage[a]
+            b = storage[int(a)]
             stack.append(b)
         elif t == "drop":
             stack.pop()
@@ -63,16 +63,16 @@ def calculate(tokens, stack, storage):
             print("Unknown token :", t)
     return done
 
-def safe_int(s):
+def safe_float(s):
     """returns an int or None if not parsable as int
 
-    >>> safe_int("123")
-    123
+    >>> safe_int("123.0")
+    123.0
     >>> type(safe_int("!23"))
     <class 'NoneType'>
     """
     try:
-        n = int(s)
+        n = float(s)
     except ValueError:
         return None
     else:
